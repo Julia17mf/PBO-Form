@@ -5,7 +5,7 @@ import java.sql.*;
 public class EditData extends JFrame {
     String[][] data = new String[480][3];
     String[] kolom = {"NIM", "Nama", "Alamat"};
-    static String nim;
+    static public String nim;
     JTable tabel;
     JLabel ljudul;
     JButton kembali, edit;
@@ -13,13 +13,8 @@ public class EditData extends JFrame {
     Statement statement;
     ResultSet resultSet;
 
-    JPanel panel;
-    JLabel ljudul2, lnama, lnim, lalamat;
-    JTextField tfnama, tfnim, tfalamat;
-    JButton edit2;
-
     public EditData() {
-        setTitle("Hapus Data Mahasiswa");
+        setTitle("Edit Data Mahasiswa");
 
         ljudul      = new JLabel("SELURUH DATA MAHASISWA");
         tabel       = new JTable(data, kolom);
@@ -92,53 +87,8 @@ public class EditData extends JFrame {
     }
 
     private void editActionPerformed(ActionEvent e) {
-        panel       = new JPanel();
-        ljudul2     = new JLabel("FORM EDIT DATA");
-        lnama       = new JLabel("Nama");
-        lnim        = new JLabel("NIM");
-        lalamat     = new JLabel("Alamat");
-        edit2       = new JButton("Edit");
-
-        setSize(500, 350);
-        ljudul.setHorizontalAlignment(SwingConstants.CENTER);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setVisible(true);
-
-        panel.setLayout(null);
-        panel.add(ljudul2);
-        panel.add(lnama);
-        panel.add(lnim);
-        panel.add(lalamat);
-        panel.add(tfnama);
-        panel.add(tfnim);
-        panel.add(tfalamat);
-        panel.add(edit2);
-
-        ljudul2.setBounds(0, 20, 500, 20);
-        lnama.setBounds(20, 60, 100, 20);
-        tfnama.setBounds(200, 60, 100, 20);
-        lnim.setBounds(20, 90, 100, 20);
-        tfnim.setBounds(200, 90, 100, 20);
-        lalamat.setBounds(20, 120, 100, 20);
-        tfalamat.setBounds(200, 120, 100, 20);
-        edit2.setBounds(150, 280, 80, 20);
-
-        edit2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try{
-                    KoneksiDB koneksi = new KoneksiDB();
-                    statement = koneksi.getKoneksi().createStatement();
-                    statement.executeUpdate("UPDATE data_mhs SET NIM = '" + tfnim.getText() + "Nama='"+ tfnama.getText() + "'," + "Alamat ='"+tfalamat.getText()+ "' WHERE NIM ='" + nim + "'");
-                    JOptionPane.showMessageDialog(null,"Data berhasil di update","Hasil",JOptionPane.INFORMATION_MESSAGE);
-                    statement.close();
-                }catch (SQLException ex){
-                    JOptionPane.showMessageDialog(null,"Data gagal di update","Hasil",JOptionPane.ERROR_MESSAGE);
-                }catch (ClassNotFoundException ex){
-                    JOptionPane.showMessageDialog(null,"Driver tidak ditemukan","Hasil",JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
+        setVisible(false);
+        new EditForm(nim);
     }
 
     private void tabelMouseClicked(MouseEvent e) {
